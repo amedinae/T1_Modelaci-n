@@ -55,8 +55,8 @@ def kutta4(x,dt):
     f_out = x + dt/6*(k1+2*k2+2*k3+k4)
     return f_out
     
-dt = 1e-9 #s
-tf = 30e-6#s
+dt = 1e-8 #s
+tf = 23e-6#s
     
 it = int(tf/dt)
     

@@ -56,12 +56,12 @@ def kutta4(x,dt,T):
     return f_out
     
 T = 1200.0 #K
-dt = 1e-9 #s
-tf = 30e-6#s
+dt = 1e-8 #s
+tf = 35e-6#s
     
 it = int(tf/dt)
     
-t = np.zeros(it+1)
+t = np.linspace(0,tf,it+1)
 x = np.zeros((it+1,7))
     
 #filas son las iteraciones
@@ -78,8 +78,8 @@ x[0,4] = ((xH2/(xH2+xO2)*P)/(R*T))*10**(-3) #mol/cm^3
     
 
 for i in range(1,it+1):
-    t[i] = t[i-1] + dt
-    x[i,:] = kutta(x[i-1,:],dt,T)
+    print(i)
+    x[i,:] = kutta4(x[i-1,:],dt,T)
     
 
 plt.plot(t,x[:,0],"-k",label="x_H")

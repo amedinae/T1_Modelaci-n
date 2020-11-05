@@ -6,26 +6,16 @@ Created on Tue Oct  6 18:34:07 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
-def velocidad_reaccion(T):
+def velocidad_reaccion(kf,kr,T):
     Ru = 8.315 #J/molK
-    kf = np.zeros(6)
-    kr = np.zeros(6)
-    with open('kf.dat','r') as file1:
-        for line in range(6):
-            A,b,Ea = [float(x) for x in next(file1).split()]
-            Ea = 4.184*Ea #J/mol
-            kf[line] = A*T**b*np.exp(-Ea/(Ru*T))
-            
-    with open('kr.dat','r') as file2:
-        for line in range(6):
-            A,b,Ea = [float(x) for x in next(file2).split()]
-            Ea = 4.184*Ea #J/mol
-            kr[line] = A*T**b*np.exp(-Ea/(Ru*T))
-    return kf,kr    
+    kf = kf[:,0]*T**kf[:,1]*np.exp(kf[:,2]/(Ru*T))
+    kr = kr[:,0]*T**kr[:,1]*np.exp(kr[:,2]/(Ru*T))
+    return kf,kr     
 
-def dXdt(x,T):
-    [[kf1,kf2,kf3,kf4,kf5,kf6],[kr1,kr2,kr3,kr4,kr5,kr6]] = velocidad_reaccion(T)
+def dXdt(x,T,kf,kr):
+    [[kf1,kf2,kf3,kf4,kf5,kf6],[kr1,kr2,kr3,kr4,kr5,kr6]] = velocidad_reaccion(kf,kr,T)
     return np.array([
                      -kf1*x[0]*x[1] + kr1*x[2]*x[3] + kf2*x[2]*x[4] - kr2*x[0]*x[3] + kf3*x[3]*x[4]-kr3*x[0]*x[5] - kf5*x[0]*x[6] + kr5*x[4]*x[1],
                      -kf1*x[0]*x[1] + kr1*x[2]*x[3] + kf5*x[0]*x[6] - kr5*x[4]*x[1] + kf6*x[2]*x[6]- kr6*x[3]*x[1],
@@ -37,21 +27,16 @@ def dXdt(x,T):
                      ])
  
     
-def euler(fi_in,n,dt,t,T):
+def euler(fi_in,dt):
     #fi_in = [x0,x1,x2,x3,x4] del tiempo conocido
     #fi_out = [x0,x1,x2,x3,x4] del tiempo futuro
-    #n es el número de variables
-    #t es el instante de tiempo
-    fi_out = np.zeros(n)
-    for i in range(n):
-        fi_out[i] = fi_in[i] + funciones(t,fi_in,T,i)*dt
-    return fi_out
+    return fi_out + dXdt(fi_in)*dt
 
-def kutta4(x,dt,T):
-    k1 = dXdt(x,T)
-    k2 = dXdt(x+1/2*k1*dt,T)
-    k3 = dXdt(x+1/2*k2*dt,T)
-    k4 = dXdt(x+k3*dt,T)
+def kutta4(x,dt,T,kf,kr):
+    k1 = dXdt(x,T,kf,kr)
+    k2 = dXdt(x+1/2*k1*dt,T,kf,kr)
+    k3 = dXdt(x+1/2*k2*dt,T,kf,kr)
+    k4 = dXdt(x+k3*dt,T,kf,kr)
     f_out = x + dt/6*(k1+2*k2+2*k3+k4)
     return f_out
     
@@ -59,7 +44,7 @@ T = 1200.0 #K
 dt = 1e-8 #s
 tf = 35e-6#s
     
-it = int(tf/dt)
+it = int(np.round(tf/dt))
     
 t = np.linspace(0,tf,it+1)
 x = np.zeros((it+1,7))
@@ -76,10 +61,14 @@ P= 1.2 # atm
 x[0,1] = ((xO2/(xH2+xO2)*P)/(R*T))*10**(-3) #mol/cm^3
 x[0,4] = ((xH2/(xH2+xO2)*P)/(R*T))*10**(-3) #mol/cm^3
     
+kf = pd.read_csv('kf.dat', header=None, sep = " ",dtype=np.float64).values
+kr = pd.read_csv('kr.dat', header=None, sep = " ",dtype=np.float64).values
+
+kf[:,2] = -kf[:,2]*4.184
+kr[:,2] = -kr[:,2]*4.184
 
 for i in range(1,it+1):
-    print(i)
-    x[i,:] = kutta4(x[i-1,:],dt,T)
+    x[i,:] = kutta4(x[i-1,:],dt,T,kf,kr)
     
 
 plt.plot(t,x[:,0],"-k",label="x_H")

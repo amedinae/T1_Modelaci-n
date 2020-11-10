@@ -35,8 +35,8 @@ def kutta4(x,sistema,Q2=0,Q3=0,Q5=0,Q6=0,V=0,c3=0,c5=0,c6=0):
     f_out = x + dt/6*(k1+2*k2+2*k3+k4)
     return f_out
 
-dt = 1e-5 #s
-tf = 10 #s
+dt = 1e-3 #s
+tf = 100 #s
     
 it = int(tf/dt)
     
@@ -56,16 +56,20 @@ V = 10
 alpha =0.2
 beta = 0.1
 QD = 1
+T0vacio = False
+tvaciado = 0
 for i in range(1,it+1):
-    x1[i,:] = kutta4(x1[i-1,:],dQdt)
+    if not T0vacio:
+        x1[i,:] = kutta4(x1[i-1,:],dQdt)
     Q2 = Q1-x1[i-1,1]
     x2[i,:] = kutta4(x2[i-1,:],dXdt,Q2,Q3,Q5,Q6,V,c3,c5,c6)
-    if x1[i,1]>1000 or x1[i,0]>1000:
-        break
+    if x1[i,0]<1e-2:
+        tvaciado = i
+        T0vacio = True
     
 plt.figure()
-plt.plot(t,x1[:,0],"-b",label="Vol")    
-plt.plot(t,x1[:,1],"-g",label="Qx")
+plt.plot(t,x1[0:tvaciado:,0],"-b",label="Vol")    
+plt.plot(t,x1[0:tvaciado,1],"-g",label="Qx")
 plt.legend(loc="upper right")
 plt.xlabel('tiempo(s)')
 plt.ylabel('Cambio de flujo volumetrico')

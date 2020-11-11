@@ -44,7 +44,7 @@ x2[0] = [1,1,1,1]
 A = 10;
 a = 1;
 g = -9.81;  
-Q1 = 5
+Q1 = 7
 Q3 = 5
 Q5 = 5
 Q6 = 5
@@ -55,7 +55,7 @@ V = 10
 alpha =0.4
 beta = 0.5
 QD = 10
-
+Vestabilidad = (A/a)**2*Q1**2/(-2*A*g)
 T0vacio = False
 tvaciado = it
 

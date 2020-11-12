@@ -39,22 +39,22 @@ it = int(tf/dt)
 t = np.linspace(0,tf,it+1)
 x1 = np.zeros((it+1,2))
 x2 = np.zeros((it+1,4))
-x1[0] = [70,0] #L
+x1[0] = [2.7,0] #L
 x2[0] = [0.1,0.1,0.1,0.1]   #kg
 A =0.8; #m^2
 a = 0.02    ; #m^2
 g = -9.81;  
-Q1 = 0.7  #L/s
-Q3 = 2.7   #L/s
-Q5 = 1.5   #L/s
-Q6 = 1.4  #L/s
-c3 = 0.25 #kg
-c5 = 0.15 #kg
-c6 = 0.14 #kg
+Q1 = 0.1  #L/s
+Q3 = 1.4   #L/s
+Q5 = 1.2   #L/s
+Q6 = 2  #L/s
+c3 = 0.47 #kg/L
+c5 = 0.4 #kg/L
+c6 = 0.4 #kg/L
 V = 10  #L
-alpha =0.4
-beta = 0.2
-QD = 3 #L/s
+alpha =0.8
+beta = 0.1
+QD = 7 #L/s
 Vestabilidad = (A/a)**2*Q1**2/(-2*A*g)
 T0vacio = False
 tvaciado = it
@@ -77,18 +77,18 @@ plt.ylabel('Cambio de flujo volumetrico')
 plt.grid()
 
 
-# plt.figure()    
-# plt.plot(t,x2[:,0],"-b",label="x1")    
-# plt.plot(t,x2[:,1],"-g",label="x2")
-# plt.plot(t,x2[:,2],"-y",label="x3")    
-# plt.plot(t,x2[:,3],"-r",label="x4")
-# plt.legend(loc="upper right")
-# plt.xlabel('tiempo(s)')
-# plt.ylabel('Cantidad de soluto')
-# plt.grid()
+plt.figure()    
+plt.plot(t,x2[:,0],"-b",label="x1")    
+plt.plot(t,x2[:,1],"-g",label="x2")
+plt.plot(t,x2[:,2],"-y",label="x3")    
+plt.plot(t,x2[:,3],"-r",label="x4")
+plt.legend(loc="upper right")
+plt.xlabel('tiempo(s)')
+plt.ylabel('Cantidad de soluto')
+plt.grid()
 
-# plt.figure()
-# plt.plot(t,x2[:,3]/V,"-r",label="c7")
-# plt.xlabel('tiempo(s)')
-# plt.ylabel('Concentracion de salida')
-# plt.grid()
+plt.figure()
+plt.plot(t,x2[:,3]/V,"-r",label="c7")
+plt.xlabel('tiempo(s)')
+plt.ylabel('Concentracion de salida')
+plt.grid()

@@ -31,7 +31,7 @@ def kutta4(x,sistema,Q2=0,Q3=0,Q5=0,Q6=0,V=0,c3=0,c5=0,c6=0,Q1=0,A=0,a=0,g=0):
     f_out = x + dt/6*(k1+2*k2+2*k3+k4)
     return f_out
 
-dt = 1e-3 #s
+dt = 6e-4 #s
 tf = 60 #s
     
 it = int(tf/dt)
@@ -39,22 +39,22 @@ it = int(tf/dt)
 t = np.linspace(0,tf,it+1)
 x1 = np.zeros((it+1,2))
 x2 = np.zeros((it+1,4))
-x1[0] = [30,0]
+x1[0] = [70,0] #L
 x2[0] = [0.1,0.1,0.1,0.1]   #kg
-A =7.068; #m^2
-a = 0.28; #m^2
+A =1.767; #m^2
+a = 0.02    ; #m^2
 g = -9.81;  
-Q1 = 2.4   #L/s
-Q3 = 0.8   #L/s
-Q5 = 3   #L/s
-Q6 = 2   #L/s
-c3 = 0.1 #kg
-c5 = 0.07 #kg
-c6 = 0.01 #kg
+Q1 = 0.3  #L/s
+Q3 = 2.7   #L/s
+Q5 = 1.5   #L/s
+Q6 = 1.4  #L/s
+c3 = 0.25 #kg
+c5 = 0.15 #kg
+c6 = 0.14 #kg
 V = 10  #L
 alpha =0.4
-beta = 0.3
-QD = 10 #L/s
+beta = 0.2
+QD = 3 #L/s
 Vestabilidad = (A/a)**2*Q1**2/(-2*A*g)
 T0vacio = False
 tvaciado = it

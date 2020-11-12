@@ -32,7 +32,7 @@ def kutta4(x,sistema,Q2=0,Q3=0,Q5=0,Q6=0,V=0,c3=0,c5=0,c6=0,Q1=0,A=0,a=0,g=0):
     return f_out
 
 dt = 1e-3 #s
-tf = 40 #s
+tf = 60 #s
     
 it = int(tf/dt)
     
@@ -44,9 +44,9 @@ x2[0] = [0.1,0.1,0.1,0.1]   #kg
 A =7.068; #m^2
 a = 0.28; #m^2
 g = -9.81;  
-Q1 = 1   #L/s
+Q1 = 2.4   #L/s
 Q3 = 0.8   #L/s
-Q5 = 5   #L/s
+Q5 = 3   #L/s
 Q6 = 2   #L/s
 c3 = 0.1 #kg
 c5 = 0.07 #kg
@@ -87,7 +87,6 @@ plt.ylabel('Cantidad de soluto')
 plt.grid()
 
 plt.figure()
-
 plt.plot(t,x2[:,3]/V,"-r",label="c7")
 plt.xlabel('tiempo(s)')
 plt.ylabel('Concentracion de salida')

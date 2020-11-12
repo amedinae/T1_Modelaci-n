@@ -85,3 +85,10 @@ plt.legend(loc="upper right")
 plt.xlabel('tiempo(s)')
 plt.ylabel('Cantidad de soluto')
 plt.grid()
+
+plt.figure()
+
+plt.plot(t,x2[:,3]/V,"-r",label="c7")
+plt.xlabel('tiempo(s)')
+plt.ylabel('Concentracion de salida')
+plt.grid()

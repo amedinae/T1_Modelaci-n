@@ -41,10 +41,10 @@ x1 = np.zeros((it+1,2))
 x2 = np.zeros((it+1,4))
 x1[0] = [70,0] #L
 x2[0] = [0.1,0.1,0.1,0.1]   #kg
-A =1.767; #m^2
+A =0.8; #m^2
 a = 0.02    ; #m^2
 g = -9.81;  
-Q1 = 0.3  #L/s
+Q1 = 0.7  #L/s
 Q3 = 2.7   #L/s
 Q5 = 1.5   #L/s
 Q6 = 1.4  #L/s
@@ -76,18 +76,19 @@ plt.xlabel('tiempo(s)')
 plt.ylabel('Cambio de flujo volumetrico')
 plt.grid()
 
-plt.figure()    
-plt.plot(t,x2[:,0],"-b",label="x0")    
-plt.plot(t,x2[:,1],"-g",label="x1")
-plt.plot(t,x2[:,2],"-y",label="x2")    
-plt.plot(t,x2[:,3],"-r",label="x3")
-plt.legend(loc="upper right")
-plt.xlabel('tiempo(s)')
-plt.ylabel('Cantidad de soluto')
-plt.grid()
 
-plt.figure()
-plt.plot(t,x2[:,3]/V,"-r",label="c7")
-plt.xlabel('tiempo(s)')
-plt.ylabel('Concentracion de salida')
-plt.grid()
+# plt.figure()    
+# plt.plot(t,x2[:,0],"-b",label="x1")    
+# plt.plot(t,x2[:,1],"-g",label="x2")
+# plt.plot(t,x2[:,2],"-y",label="x3")    
+# plt.plot(t,x2[:,3],"-r",label="x4")
+# plt.legend(loc="upper right")
+# plt.xlabel('tiempo(s)')
+# plt.ylabel('Cantidad de soluto')
+# plt.grid()
+
+# plt.figure()
+# plt.plot(t,x2[:,3]/V,"-r",label="c7")
+# plt.xlabel('tiempo(s)')
+# plt.ylabel('Concentracion de salida')
+# plt.grid()
